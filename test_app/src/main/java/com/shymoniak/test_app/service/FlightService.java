@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FlightService {
     List<FlightDTO> findAllByAirCompanyNameAndStatus(String airCompanyName, String status);
-    List<FlightDTO> findAllActiveAndCreatedADayAgo();
+    List<FlightDTO> findAllActiveAndStartedADayAgo();
     void addFlightWithStatusPending(FlightDTO flightDTO);
     void changeFlightDueToStatusConditions(Integer id, Date date);
 }

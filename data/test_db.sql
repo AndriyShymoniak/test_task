@@ -33,7 +33,7 @@ CREATE TABLE flight (
 	distance INT,
 	ended_at DATE,
     delay_started_at DATE,
-    created_at DATE
+    started_at DATE
 );
 
 
@@ -55,7 +55,7 @@ VALUES
 ('Sky Up Airlines', 'REGIONAL_AIRLINES', "2018-06-04");
 
 INSERT INTO 
-flight(flight_status, air_company_id, airplane_id, departure_country ,destination_country, distance, ended_at, delay_started_at, created_at)
+flight(flight_status, air_company_id, airplane_id, departure_country ,destination_country, distance, ended_at, delay_started_at, started_at)
 VALUES
 ('ACTIVE', 1, 1, 'Ukraine' ,'Turkey', 1500, null, "2021-03-09  14:45:00", "2021-03-10  16:00:35"),
 ('ACTIVE', 2, 2, 'Poland' ,'Ukraine', 800, null, null, "2021-03-01  18:30:35"),

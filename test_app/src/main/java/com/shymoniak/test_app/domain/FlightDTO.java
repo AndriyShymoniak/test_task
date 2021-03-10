@@ -21,6 +21,6 @@ public class FlightDTO {
     private String destinationCountry;
     private Date endedAt;
     private Date delayStartedAt;
-    private Date createdAt;
+    private Date startedAt;
     private FlightStatus flightStatus;
 }

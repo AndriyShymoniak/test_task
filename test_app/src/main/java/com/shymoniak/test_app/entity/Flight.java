@@ -40,8 +40,8 @@ public class Flight {
     @Column(name = "delay_started_at")
     private Date delayStartedAt;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Column(name = "started_at")
+    private Date startedAt;
 
     @Column(name = "flight_status", length = 30)
     @Enumerated(EnumType.STRING)

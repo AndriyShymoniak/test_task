@@ -31,10 +31,10 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<FlightDTO> findAllActiveAndCreatedADayAgo() {
+    public List<FlightDTO> findAllActiveAndStartedADayAgo() {
         DateTime dateTime = new DateTime().minusHours(24);
         return modelMapper.mapAll(
-                flightRepository.findAllByFlightStatusAndCreatedAtBefore(FlightStatus.ACTIVE, dateTime.toDate())
+                flightRepository.findAllByFlightStatusAndStartedAtBefore(FlightStatus.ACTIVE, dateTime.toDate())
                 , FlightDTO.class
         );
     }
@@ -50,7 +50,7 @@ public class FlightServiceImpl implements FlightService {
     public void changeFlightDueToStatusConditions(Integer id, Date date) {
         Flight flight = flightRepository.getOne(id);
         if (flight.getFlightStatus() == FlightStatus.ACTIVE){
-            flight.setCreatedAt(date);
+            flight.setStartedAt(date);
         } else if (flight.getFlightStatus() == FlightStatus.COMPLETED){
             flight.setEndedAt(date);
         } else if (flight.getFlightStatus() == FlightStatus.DELAYED){

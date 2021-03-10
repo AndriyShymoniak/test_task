@@ -20,5 +20,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     List<Flight> findAllByNameAndStatus(@Param("airCompanyName") String airCompanyName,
                                        @Param("flightStatus") String flightStatus);
 
-    List<Flight> findAllByFlightStatusAndCreatedAtBefore(FlightStatus status, Date date);
+    List<Flight> findAllByFlightStatusAndStartedAtBefore(FlightStatus status, Date date);
 }
+

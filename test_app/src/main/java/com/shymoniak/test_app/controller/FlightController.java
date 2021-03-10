@@ -29,7 +29,7 @@ public class FlightController {
     @GetMapping("/getActiveAndCreatedDayAgo")
     ResponseEntity<List<FlightDTO>> findAllActiveCreatedDayAgo() {
         return new ResponseEntity<>(
-                flightService.findAllActiveAndCreatedADayAgo(),
+                flightService.findAllActiveAndStartedADayAgo(),
                 HttpStatus.OK);
     }
 
