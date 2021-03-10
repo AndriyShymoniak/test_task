@@ -20,6 +20,11 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     List<Flight> findAllByNameAndStatus(@Param("airCompanyName") String airCompanyName,
                                        @Param("flightStatus") String flightStatus);
 
+    @Query(value = "SELECT * FROM flight f WHERE f.flight_status='COMPLETED'" +
+                   "AND f.ended_at-f.started_at>:estimated",
+            nativeQuery = true)
+    List<Flight> findAllCompletedWithLongerFlightTime(@Param("estimated") Date estimated);
+
     List<Flight> findAllByFlightStatusAndStartedAtBefore(FlightStatus status, Date date);
 }
 

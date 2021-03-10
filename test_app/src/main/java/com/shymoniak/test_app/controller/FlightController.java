@@ -1,6 +1,7 @@
 package com.shymoniak.test_app.controller;
 
 import com.shymoniak.test_app.domain.FlightDTO;
+import com.shymoniak.test_app.entity.Flight;
 import com.shymoniak.test_app.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,5 +48,12 @@ public class FlightController {
         System.out.println(date);
         flightService.changeFlightDueToStatusConditions(id, date);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllCompletedWithLongerFlightTime/{date}")
+    ResponseEntity<List<FlightDTO>> findAllCompletedWithLongerFlightTime(
+            @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,
+                    pattern = "HH:mm:ss")Date date){
+        return new ResponseEntity<>(flightService.findAllCompletedWithLongerFlightTime(date), HttpStatus.OK);
     }
 }
