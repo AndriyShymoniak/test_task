@@ -17,28 +17,30 @@ public class AirCompanyController {
 
     @GetMapping({"", "/"})
     ResponseEntity<List<AirCompanyDTO>> showAllAirCompanies() {
-        return new ResponseEntity<>(airCompanyService.getAllAirCompanies(), HttpStatus.OK);
+        return new ResponseEntity<>(airCompanyService.getAllAirCompanies(),
+                HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
     ResponseEntity<AirCompanyDTO> findAirCompanyById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(airCompanyService.getAirCompanyById(id), HttpStatus.OK);
+        return new ResponseEntity<>(airCompanyService.getAirCompanyById(id),
+                HttpStatus.OK);
     }
 
     @PostMapping
-    ResponseEntity<Void> addAirCompany(@RequestBody AirCompanyDTO airCompanyDTO){
+    ResponseEntity<Void> addAirCompany(@RequestBody AirCompanyDTO airCompanyDTO) {
         airCompanyService.addAirCompany(airCompanyDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping
-    ResponseEntity<Void> changeAirCompany(@RequestBody AirCompanyDTO airCompanyDTO){
-        airCompanyService.changeAirCompany(airCompanyDTO);
+    ResponseEntity<Void> changeAirCompany(@RequestBody AirCompanyDTO airCompany) {
+        airCompanyService.changeAirCompany(airCompany);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteId/{deleteId}")
-    ResponseEntity<Void> deleteAirCompany(@PathVariable("deleteId") Integer id){
+    ResponseEntity<Void> deleteAirCompany(@PathVariable("deleteId") Integer id) {
         airCompanyService.deleteAirCompany(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

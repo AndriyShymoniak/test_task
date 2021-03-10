@@ -1,6 +1,7 @@
 package com.shymoniak.test_app.service.implementations;
 
 import com.shymoniak.test_app.domain.FlightDTO;
+import com.shymoniak.test_app.entity.Flight;
 import com.shymoniak.test_app.entity.enums.FlightStatus;
 import com.shymoniak.test_app.repository.FlightRepository;
 import com.shymoniak.test_app.service.FlightService;
@@ -36,5 +37,25 @@ public class FlightServiceImpl implements FlightService {
                 flightRepository.findAllByFlightStatusAndCreatedAtBefore(FlightStatus.ACTIVE, dateTime.toDate())
                 , FlightDTO.class
         );
+    }
+
+    @Override
+    public void addFlightWithStatusPending(FlightDTO flightDTO) {
+        Flight flight = modelMapper.map(flightDTO, Flight.class);
+        flight.setFlightStatus(FlightStatus.PENDING);
+        flightRepository.save(flight);
+    }
+
+    @Override
+    public void changeFlightDueToStatusConditions(Integer id, Date date) {
+        Flight flight = flightRepository.getOne(id);
+        if (flight.getFlightStatus() == FlightStatus.ACTIVE){
+            flight.setCreatedAt(date);
+        } else if (flight.getFlightStatus() == FlightStatus.COMPLETED){
+            flight.setEndedAt(date);
+        } else if (flight.getFlightStatus() == FlightStatus.DELAYED){
+            flight.setDelayStartedAt(date);
+        }
+        flightRepository.save(flight);
     }
 }
