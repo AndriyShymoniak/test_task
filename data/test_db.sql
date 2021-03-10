@@ -57,7 +57,7 @@ VALUES
 INSERT INTO 
 flight(flight_status, air_company_id, airplane_id, departure_country ,destination_country, distance, ended_at, delay_started_at, created_at)
 VALUES
-('ACTIVE', 1, 1, 'Ukraine' ,'Turkey', 1500, null, "2021-03-09  14:45:00", "2021-03-01  16:00:35"),
+('ACTIVE', 1, 1, 'Ukraine' ,'Turkey', 1500, null, "2021-03-09  14:45:00", "2021-03-10  16:00:35"),
 ('ACTIVE', 2, 2, 'Poland' ,'Ukraine', 800, null, null, "2021-03-01  18:30:35"),
 ('COMPLETED', 3, 3, 'Germany' ,'Italy', 1500, "2020-05-12  09:34:21", null, "2020-05-12  09:34:21"),
 ('COMPLETED', 1, 4, 'Italy' ,'Romania', 1600, "2021-01-01  17:12:10", "2021-01-01  14:27:03", "2020-11-27  17:40:21"),

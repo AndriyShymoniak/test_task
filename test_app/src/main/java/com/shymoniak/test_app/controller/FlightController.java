@@ -27,4 +27,11 @@ public class FlightController {
                 flightService.findAllByAirCompanyNameAndStatus(name, status),
                 HttpStatus.OK);
     }
+
+    @GetMapping("/getActiveAndCreatedDayAgo")
+    ResponseEntity<List<FlightDTO>> findAllActiveCreatedDayAgo() {
+        return new ResponseEntity<>(
+                flightService.findAllActiveAndCreatedADayAgo(),
+                HttpStatus.OK);
+    }
 }
