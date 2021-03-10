@@ -28,9 +28,6 @@ public class Flight {
     @Column(name = "airplaneId")
     private int airplane_id;
 
-    @Column(name = "flight_status")
-    private FlightStatus flightStatus;
-
     @Column(name = "departure_country", length = 30)
     private String departureCountry;
 
@@ -45,4 +42,8 @@ public class Flight {
 
     @Column(name = "created_at")
     private Date createdAt;
+
+    @Column(name = "flight_status", length = 30)
+    @Enumerated(EnumType.STRING)
+    private FlightStatus flightStatus;
 }

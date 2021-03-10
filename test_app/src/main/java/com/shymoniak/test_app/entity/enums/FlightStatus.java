@@ -7,9 +7,9 @@ public enum FlightStatus {
     ACTIVE("ACTIVE"), COMPLETED("COMPLETED"),
     DELAYED("DELAYED"), PENDING("PENDING");
 
-    private String type;
+    private String status;
 
-    FlightStatus(String type) {
-        this.type = type;
+    FlightStatus(String status) {
+        this.status = status;
     }
 }
