@@ -19,13 +19,13 @@ public class AirCompany {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "air_company_name", length = 30)
+    @Column(name = "air_company_name", length = 30, nullable = false)
     private String airCompanyName;
 
-    @Column(name = "founded_at")
+    @Column(name = "founded_at", nullable = false)
     private Date foundedAt;
 
-    @Column(name = "company_type", length = 30)
+    @Column(name = "company_type", length = 30, nullable = false)
     @Enumerated(EnumType.STRING)
     private CompanyType companyType;
 }

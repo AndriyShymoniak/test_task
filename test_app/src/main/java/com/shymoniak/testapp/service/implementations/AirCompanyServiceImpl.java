@@ -5,13 +5,13 @@ import com.shymoniak.testapp.entity.AirCompany;
 import com.shymoniak.testapp.repository.AirCompanyRepository;
 import com.shymoniak.testapp.service.AirCompanyService;
 import com.shymoniak.testapp.service.utils.ObjectMapperUtils;
+import com.shymoniak.testapp.service.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.InvalidObjectException;
-import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AirCompanyServiceImpl implements AirCompanyService {
@@ -22,6 +22,9 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     @Autowired
     private ObjectMapperUtils modelMapper;
 
+    @Autowired
+    Validator validator;
+
     @Override
     public List<AirCompanyDTO> getAllAirCompanies() {
         return modelMapper.mapAll(airCompanyRepository.findAll(),
@@ -29,14 +32,19 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     }
 
     @Override
-    public AirCompanyDTO getAirCompanyById(int id) throws EntityNotFoundException {
-        return modelMapper.map(airCompanyRepository.getOne(id),
-                AirCompanyDTO.class);
+    public AirCompanyDTO getAirCompanyById(int id) throws IllegalArgumentException{
+        Optional<AirCompany> airCompany = airCompanyRepository.findById(id);
+        if (airCompany.isPresent()){
+            return modelMapper.map(airCompanyRepository.getOne(id),
+                    AirCompanyDTO.class);
+        } else {
+            throw new IllegalArgumentException("There is no such record in Database");
+        }
     }
 
     @Override
     public void addAirCompany(AirCompanyDTO airCompany) throws InvalidObjectException {
-        if (isValid(airCompany)) {
+        if (validator.isValid(airCompany)) {
             airCompanyRepository.save(modelMapper.map(airCompany,
                     AirCompany.class));
         } else {
@@ -46,7 +54,7 @@ public class AirCompanyServiceImpl implements AirCompanyService {
 
     @Override
     public void changeAirCompany(AirCompanyDTO airCompany) throws InvalidObjectException {
-        if (isValid(airCompany)) {
+        if (validator.isValid(airCompany)) {
             airCompanyRepository.save(modelMapper.map(airCompany,
                     AirCompany.class));
         } else {
@@ -55,25 +63,12 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     }
 
     @Override
-    public void deleteAirCompany(Integer id) throws EntityNotFoundException {
-        airCompanyRepository.getOne(id);
-        airCompanyRepository.deleteById(id);
-    }
-
-    private boolean isValid(AirCompanyDTO obj) {
-        try {
-            Field[] fields = obj.getClass().getDeclaredFields();
-            for (Field field : fields) {
-                field.setAccessible(true);
-                if (field.get(obj).equals(null) || field.get(obj).equals(0)
-                        && !field.getName().equals("id")) {
-                    return false;
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return false;
+    public void deleteAirCompany(Integer id) throws IllegalArgumentException {
+        Optional<AirCompany> airCompany = airCompanyRepository.findById(id);
+        if (airCompany.isPresent()){
+            airCompanyRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("There is no such record in Database");
         }
-        return true;
     }
 }

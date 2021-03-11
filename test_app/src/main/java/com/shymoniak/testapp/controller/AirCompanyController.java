@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.InvalidObjectException;
 import java.util.List;
 
@@ -26,8 +25,14 @@ public class AirCompanyController {
     @GetMapping("/id/{id}")
     ResponseEntity<AirCompanyDTO> findAirCompanyById(@PathVariable("id")
                                                              Integer id) {
-        return new ResponseEntity<>(airCompanyService.getAirCompanyById(id),
-                HttpStatus.OK);
+        try {
+            AirCompanyDTO airCompanyDTO = airCompanyService.getAirCompanyById(id);
+            return new ResponseEntity<>(airCompanyDTO, HttpStatus.OK);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
 
     @PostMapping
@@ -57,7 +62,7 @@ public class AirCompanyController {
         try {
             airCompanyService.deleteAirCompany(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (EntityNotFoundException ex) {
+        } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

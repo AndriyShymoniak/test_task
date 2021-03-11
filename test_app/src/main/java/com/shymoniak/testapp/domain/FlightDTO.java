@@ -16,7 +16,7 @@ public class FlightDTO {
     private int id;
     private int distance;
     private int airCompanyId;
-    private int airplane_id;
+    private int airplaneId;
     private String departureCountry;
     private String destinationCountry;
     private Date endedAt;

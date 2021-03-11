@@ -6,15 +6,15 @@ import com.shymoniak.testapp.entity.enums.FlightStatus;
 import com.shymoniak.testapp.repository.FlightRepository;
 import com.shymoniak.testapp.service.FlightService;
 import com.shymoniak.testapp.service.utils.ObjectMapperUtils;
+import com.shymoniak.testapp.service.utils.Validator;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.InvalidObjectException;
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FlightServiceImpl implements FlightService {
@@ -24,6 +24,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private ObjectMapperUtils modelMapper;
+
+    @Autowired
+    private Validator validator;
 
     @Override
     public List<FlightDTO> findAllByAirCompanyNameAndStatus(String airCompanyCame,
@@ -45,7 +48,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public void addFlightWithStatusPending(FlightDTO flightDTO) throws InvalidObjectException {
-        if (isValid(flightDTO)) {
+        if (validator.isValid(flightDTO)) {
             Flight flight = modelMapper.map(flightDTO, Flight.class);
             flight.setFlightStatus(FlightStatus.PENDING);
             flightRepository.save(flight);
@@ -55,16 +58,22 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void changeFlightDueToStatusConditions(Integer id, Date date) throws EntityNotFoundException {
-        Flight flight = flightRepository.getOne(id);
-        if (flight.getFlightStatus() == FlightStatus.ACTIVE) {
-            flight.setStartedAt(date);
-        } else if (flight.getFlightStatus() == FlightStatus.COMPLETED) {
-            flight.setEndedAt(date);
-        } else if (flight.getFlightStatus() == FlightStatus.DELAYED) {
-            flight.setDelayStartedAt(date);
+    public void changeFlightDueToStatusConditions(Integer id, Date date) throws IllegalArgumentException {
+        Optional<Flight> optFlight = flightRepository.findById(id);
+        if (optFlight.isPresent()) {
+            Flight flight = flightRepository.getOne(id);
+            if (flight.getFlightStatus() == FlightStatus.ACTIVE) {
+                flight.setStartedAt(date);
+            } else if (flight.getFlightStatus() == FlightStatus.COMPLETED) {
+                flight.setEndedAt(date);
+            } else if (flight.getFlightStatus() == FlightStatus.DELAYED) {
+                flight.setDelayStartedAt(date);
+            }
+            flightRepository.save(flight);
+        } else {
+            throw new IllegalArgumentException("There is no such record in " +
+                    "Database");
         }
-        flightRepository.save(flight);
     }
 
     @Override
@@ -72,27 +81,5 @@ public class FlightServiceImpl implements FlightService {
         return modelMapper.mapAll(
                 flightRepository.findAllCompletedWithLongerFlightTime(estimated),
                 FlightDTO.class);
-    }
-
-    private boolean isValid(FlightDTO obj) {
-        try {
-            Class<?> objClass = obj.getClass();
-            Field[] fields = objClass.getDeclaredFields();
-            for (Field field : fields) {
-                field.setAccessible(true);
-                if (field.get(obj).equals(null) || field.get(obj).equals(0)
-                        && !field.getName().equals("id")
-                        && !field.getName().equals("endedAt")
-                        && !field.getName().equals("delayStartedAt")
-                        && !field.getName().equals("startedAt")
-                        && !field.getName().equals("flightStatus")) {
-                    return false;
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
     }
 }

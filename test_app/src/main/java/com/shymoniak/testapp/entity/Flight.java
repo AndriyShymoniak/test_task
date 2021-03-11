@@ -19,19 +19,19 @@ public class Flight {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "distance")
+    @Column(name = "distance", nullable = false)
     private int distance;
 
-    @Column(name = "air_company_id")
+    @Column(name = "air_company_id", nullable = false)
     private int airCompanyId;
 
-    @Column(name = "airplaneId")
-    private int airplane_id;
+    @Column(name = "airplane_id", nullable = false)
+    private int airplaneId;
 
-    @Column(name = "departure_country", length = 30)
+    @Column(name = "departure_country", length = 30, nullable = false)
     private String departureCountry;
 
-    @Column(name = "destination_country", length = 30)
+    @Column(name = "destination_country", length = 30, nullable = false)
     private String destinationCountry;
 
     @Column(name = "ended_at")

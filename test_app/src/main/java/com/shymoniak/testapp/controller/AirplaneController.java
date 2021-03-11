@@ -34,7 +34,7 @@ public class AirplaneController {
         try {
             airplaneService.moveToAnotherAirCompany(id, airCompanyId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (EntityNotFoundException ex) {
+        } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

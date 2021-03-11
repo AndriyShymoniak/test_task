@@ -63,7 +63,7 @@ public class FlightController {
         try {
             flightService.changeFlightDueToStatusConditions(id, date);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (EntityNotFoundException ex) {
+        } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
