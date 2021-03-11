@@ -8,7 +8,7 @@ You can easily install and use it, following this step by step program execution
 1. Make sure you have Java 11 JDK, any Java Environment, Postman and MySQL Workbench 8.0 installed.
 2. Clone this project.
 3. Find "test_db.sql" file in "/data" folder, open it as SQL script and run it to create database and set initial values.
-4. You should also change a few fields in Java application properties located in "test_app\src\main\resources\application.properties" There you should change
+4. You should also change a few fields in Java application properties located in "test_app\src\main\resources\application.properties":
 
 - spring.datasource.username = (your MySQL Workbench instance username)
 - spring.datasource.password = (your MySQL Workbench instance password)
