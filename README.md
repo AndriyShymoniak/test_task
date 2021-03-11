@@ -26,8 +26,13 @@ You can easily install and use it, following this step by step program execution
 
 ## Testing
 There are Postman requests prepared to test each function of application, so you can use and modify them.
+
 The results of those requests you can see either in postman response window or making select queries in MySQL Workbencch(mentioned below). 
-(SELECT * FROM airplane_test.air_company;   ---   Select querry for Air Company entity
-SELECT * FROM airplane_test.airplane;   ---   Select querry for Airplane entity
-SELECT * FROM airplane_test.flight;   ---   Select querry for Flight entity)
+
+- SELECT * FROM airplane_test.air_company;      Select querry for Air Company entity
+
+- SELECT * FROM airplane_test.airplane;      Select querry for Airplane entity
+
+- SELECT * FROM airplane_test.flight;      Select querry for Flight entity
+
 In case user enters invalid data, program can handle requests without crashing.
