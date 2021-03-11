@@ -5,11 +5,15 @@ You can easily install and use it, following this step by step program execution
 
 
 ## Installation
-1. Make sure you have Java 11 JDK, any Java Environment, Postman and MySQL Workbencch 8.0 installed.
+1. Make sure you have Java 11 JDK, any Java Environment, Postman and MySQL Workbench 8.0 installed.
 2. Clone this project.
 3. Find "test_db.sql" file in "/data" folder, open it as SQL script and run it to create database and set initial values.
-4. Now you can run Java project. The main class is located in "test_app\src\main\java\com\shymoniak\testapp\TestAppApplication.java".
-5. Import json requests collection "Test app requests.postman_collection.json" from "/data" folder to test application.
+4. You should also change a few fields in Java application properties located in "test_app\src\main\resources\application.properties" There you should change
+
+- spring.datasource.username = (your MySQL Workbench instance username)
+- spring.datasource.password = (your MySQL Workbench instance password)
+5. Now you can run Java project. The main class is located in "test_app\src\main\java\com\shymoniak\testapp\TestAppApplication.java".
+6. Import json requests collection "Test app requests.postman_collection.json" from "/data" folder to test application.
 
 ## Functions
 1. Simple CRUD operations for Air company entity.
@@ -27,7 +31,7 @@ You can easily install and use it, following this step by step program execution
 ## Testing
 There are Postman requests prepared to test each function of application, so you can use and modify them.
 
-The results of those requests you can see either in postman response window or making select queries in MySQL Workbencch(mentioned below). 
+The results of those requests you can see either in postman response window or making select queries in MySQL Workbench(mentioned below). 
 
 - SELECT * FROM airplane_test.air_company;      Select querry for Air Company entity
 
