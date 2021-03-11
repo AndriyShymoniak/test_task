@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import java.io.InvalidObjectException;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +29,10 @@ public class FlightController {
     }
 
     @GetMapping("/findAllActiveStartedDayAgo")
-    ResponseEntity<List<FlightDTO>> findAllActiveStartedDayAgo() {
+    ResponseEntity<List<FlightDTO>> findAllActiveStartedMoreThenDayAgo() {
         return new ResponseEntity<>(
-                flightService.findAllActiveAndStartedADayAgo(), HttpStatus.OK);
+                flightService.findAllActiveAndStartedMoreThenDayAgo(),
+                HttpStatus.OK);
     }
 
     @GetMapping("/findAllCompletedWithLongerFlightTime/{date}")
@@ -43,8 +46,13 @@ public class FlightController {
 
     @PostMapping
     ResponseEntity<Void> addFlightWithStatusPending(@RequestBody FlightDTO flight) {
-        flightService.addFlightWithStatusPending(flight);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try {
+            flightService.addFlightWithStatusPending(flight);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (InvalidObjectException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @RequestMapping("/changeFlightAccordingToStatus/{id}/{date}")
@@ -52,7 +60,12 @@ public class FlightController {
             @PathVariable("id") Integer id,
             @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,
                     pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
-        flightService.changeFlightDueToStatusConditions(id, date);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            flightService.changeFlightDueToStatusConditions(id, date);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (EntityNotFoundException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -10,6 +10,9 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.io.InvalidObjectException;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<FlightDTO> findAllActiveAndStartedADayAgo() {
+    public List<FlightDTO> findAllActiveAndStartedMoreThenDayAgo() {
         DateTime dateTime = new DateTime().minusHours(24);
         return modelMapper.mapAll(
                 flightRepository.findAllByFlightStatusAndStartedAtBefore(
@@ -41,14 +44,18 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void addFlightWithStatusPending(FlightDTO flightDTO) {
-        Flight flight = modelMapper.map(flightDTO, Flight.class);
-        flight.setFlightStatus(FlightStatus.PENDING);
-        flightRepository.save(flight);
+    public void addFlightWithStatusPending(FlightDTO flightDTO) throws InvalidObjectException {
+        if (isValid(flightDTO)) {
+            Flight flight = modelMapper.map(flightDTO, Flight.class);
+            flight.setFlightStatus(FlightStatus.PENDING);
+            flightRepository.save(flight);
+        } else {
+            throw new InvalidObjectException("Fields must not be null.");
+        }
     }
 
     @Override
-    public void changeFlightDueToStatusConditions(Integer id, Date date) {
+    public void changeFlightDueToStatusConditions(Integer id, Date date) throws EntityNotFoundException {
         Flight flight = flightRepository.getOne(id);
         if (flight.getFlightStatus() == FlightStatus.ACTIVE) {
             flight.setStartedAt(date);
@@ -65,5 +72,27 @@ public class FlightServiceImpl implements FlightService {
         return modelMapper.mapAll(
                 flightRepository.findAllCompletedWithLongerFlightTime(estimated),
                 FlightDTO.class);
+    }
+
+    private boolean isValid(FlightDTO obj) {
+        try {
+            Class<?> objClass = obj.getClass();
+            Field[] fields = objClass.getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                if (field.get(obj).equals(null) || field.get(obj).equals(0)
+                        && !field.getName().equals("id")
+                        && !field.getName().equals("endedAt")
+                        && !field.getName().equals("delayStartedAt")
+                        && !field.getName().equals("startedAt")
+                        && !field.getName().equals("flightStatus")) {
+                    return false;
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

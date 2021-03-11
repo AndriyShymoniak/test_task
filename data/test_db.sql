@@ -5,32 +5,32 @@ USE airplane_test;
 # Add NOT NULL
 CREATE TABLE airplane (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	airplane_name VARCHAR(30),
-	factory VARCHAR(30),
-	serial_number VARCHAR(10),
+	airplane_name VARCHAR(30) NOT NULL,
+	factory VARCHAR(30) NOT NULL,
+	serial_number VARCHAR(10) NOT NULL,
 	air_company_id INT,
-	number_of_flights INT,
-	flight_distance INT,
-	fuel_capacity INT,
-    airplane_type VARCHAR(100),
-    created_at DATE
+	number_of_flights INT NOT NULL,
+	flight_distance INT NOT NULL,
+	fuel_capacity INT NOT NULL,
+    airplane_type VARCHAR(100) NOT NULL,
+    created_at DATE NOT NULL
 );
 
 CREATE TABLE air_company (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	air_company_name VARCHAR(30),
-	company_type VARCHAR(30),
-	founded_at DATE
+	air_company_name VARCHAR(30) NOT NULL,
+	company_type VARCHAR(30) NOT NULL,
+	founded_at DATE NOT NULL
 );
 
 CREATE TABLE flight (
 	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	flight_status VARCHAR(30),
-	air_company_id INT,
-	airplane_id INT,
-	departure_country VARCHAR(30),
-	destination_country VARCHAR(30),
-	distance INT,
+	air_company_id INT NOT NULL,
+	airplane_id INT NOT NULL,
+	departure_country VARCHAR(30) NOT NULL,
+	destination_country VARCHAR(30) NOT NULL,
+	distance INT NOT NULL,
 	ended_at DATE,
     delay_started_at DATE,
     started_at DATE

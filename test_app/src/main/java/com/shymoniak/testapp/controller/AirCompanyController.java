@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import java.io.InvalidObjectException;
 import java.util.List;
 
 @RestController
@@ -30,19 +32,34 @@ public class AirCompanyController {
 
     @PostMapping
     ResponseEntity<Void> addAirCompany(@RequestBody AirCompanyDTO airCompany) {
-        airCompanyService.addAirCompany(airCompany);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try {
+            airCompanyService.addAirCompany(airCompany);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (InvalidObjectException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PutMapping
     ResponseEntity<Void> changeAirCompany(@RequestBody AirCompanyDTO airCompany) {
-        airCompanyService.changeAirCompany(airCompany);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            airCompanyService.changeAirCompany(airCompany);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (InvalidObjectException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @DeleteMapping("/deleteId/{deleteId}")
     ResponseEntity<Void> deleteAirCompany(@PathVariable("deleteId") Integer id) {
-        airCompanyService.deleteAirCompany(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            airCompanyService.deleteAirCompany(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (EntityNotFoundException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
