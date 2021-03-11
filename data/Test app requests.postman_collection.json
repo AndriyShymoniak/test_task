@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "dba3bd67-5540-48f6-926c-3490eed26fca",
+		"name": "Test app requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. GetAll Air Companies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airCompany/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airCompany",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. GetOne Air Company by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airCompany/id/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airCompany",
+						"id",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Create Air Company",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"airCompanyName\": \"NEW Air Company\",\r\n        \"foundedAt\": \"1992-09-30T21:00:00.000+00:00\",\r\n        \"companyType\": \"INTERNATIONAL_AIRLINES\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airCompany/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airCompany",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Update Air Company",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"id\": 5,\r\n        \"airCompanyName\": \"NEW NAME Air Company\",\r\n        \"foundedAt\": \"1992-09-29T21:00:00.000+00:00\",\r\n        \"companyType\": \"INTERNATIONAL_AIRLINES\"\r\n    },",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airCompany/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airCompany",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Delete Air Company by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airCompany/deleteId/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airCompany",
+						"deleteId",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Move Airplane to another company",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/airplane//changeAirCompany/1/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airplane",
+						"",
+						"changeAirCompany",
+						"1",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Find all Flights by Air Company name and status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight/findAllByAirCompanyAndStatus/Ukraine%20International%20Airlines/ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"findAllByAirCompanyAndStatus",
+						"Ukraine%20International%20Airlines",
+						"ACTIVE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Find all ACTIVE Flights started more than 24 hours ago",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flight/findAllActiveStartedDayAgo/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"findAllActiveStartedDayAgo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Create Airplane (Could be assign to a company immediately or moved later).",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numberOfFlights\": 0,\r\n    \"flightDistance\": 2400,\r\n    \"fuelCapacity\": 4000, \r\n    \"airplaneName\": \"Comac C919\",\r\n    \"factory\": \"COMAC\",\r\n    \"serialNumber\": \"R5555\",\r\n    \"airplaneType\": \"Mid-Size Passenger Jet\",\r\n    \"createdAt\": \"2021-03-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/airplane/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airplane",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Create Flight with status PENDING",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"distance\": 1800,\r\n    \"airCompanyId\": 2,\r\n    \"airplaneId\": 5, \r\n    \"departureCountry\": \"Great Britain\",\r\n    \"destinationCountry\": \"France\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flight/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Change Flight depending on status",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flight/changeFlightAccordingToStatus/1/2020-07-23%2017:45:21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"changeFlightAccordingToStatus",
+						"1",
+						"2020-07-23%2017:45:21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Get all COMPLETED Flights where difference between started and ended time is bigger than estimated flight time.",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flight/findAllCompletedWithLongerFlightTime/17:45:21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"findAllCompletedWithLongerFlightTime",
+						"17:45:21"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
